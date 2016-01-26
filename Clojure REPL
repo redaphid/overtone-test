@@ -1,0 +1,74 @@
+;; This Clojure REPL is divided into two areas, top and bottom, delimited by a line of dashes. The top area shows code that's been executed in the REPL, standard out from running code, and the results of executed expressions. The bottom area allows Clojure code to be entered. The code can be executed by pressing shift+enter.
+
+;; Try it now by typing (+ 1 1) in the bottom section and pressing shift+enter.
+
+;; Working in another Clojure file and sending forms to the REPL is the most efficient way to work. Use the following key bindings to send code to the REPL. See the settings for more keybindings.
+
+;; ctrl-, then b - execute block. Finds the block of Clojure code your cursor is in and executes that.
+
+;; Try it now. Put your cursor inside this block and press ctrl and comma together,
+;; release, then press b.
+(+ 2 3)
+
+;; ctrl-, s - Executes the selection. Sends the selected text to the REPL.
+
+;; Try it now. Select these three lines and press ctrl and comma together, 
+;; release, then press s.
+(println "hello 1")
+(println "hello 2")
+(println "hello 3")
+
+;; You can disable this help text in the settings.
+Starting REPL in /Users/redaphid/Projects/personal/clojure/overtone-test
+--> Loading Overtone...
+--> Booting internal SuperCollider server...
+Found 0 LADSPA plugins
+*** ERROR: open directory failed '/Users/redaphid/Library/Application Support/SuperCollider/synthdefs'
+Number of Devices: 2
+   0 : "Built-in Microph"
+   1 : "Built-in Output"
+
+"Built-in Microph" Input Device
+   Streams: 1
+      0  channels 2
+
+"Built-in Output" Output Device
+   Streams: 1
+      0  channels 2
+
+SC_AudioDriver: sample rate = 44100.000000, driver's block size = 512
+Exception in World_OpenUDP: unable to bind udp socket
+
+--> Connecting to internal SuperCollider server...
+--> Connection established
+
+    _____                 __
+   / __  /_  _____  _____/ /_____  ____  ___
+  / / / / | / / _ \/ ___/ __/ __ \/ __ \/ _ \
+ / /_/ /| |/ /  __/ /  / /_/ /_/ / / / /  __/
+ \____/ |___/\___/_/   \__/\____/_/ /_/\___/
+
+   Collaborative Programmable Music. v0.9.1
+
+
+Hello Redaphid. Do you feel it? I do. Creativity is rushing through your veins today!
+
+--> Asset not cached - starting download...
+  --> Downloading file  - http://www.freesound.org/api/sounds/333991?api_key=47efd585321048819a2328721507ee23
+  Download timed out. Retry 1: http://www.freesound.org/api/sounds/333991?api_key=47efd585321048819a2328721507ee23
+  Download timed out. Retry 2: http://www.freesound.org/api/sounds/333991?api_key=47efd585321048819a2328721507ee23
+  Download timed out. Retry 3: http://www.freesound.org/api/sounds/333991?api_key=47efd585321048819a2328721507ee23
+  Download timed out. Retry 4: http://www.freesound.org/api/sounds/333991?api_key=47efd585321048819a2328721507ee23
+  Download timed out. Retry 5: http://www.freesound.org/api/sounds/333991?api_key=47efd585321048819a2328721507ee23
+  Download timed out. Retry 6: http://www.freesound.org/api/sounds/333991?api_key=47efd585321048819a2328721507ee23
+  Download timed out. Retry 7: http://www.freesound.org/api/sounds/333991?api_key=47efd585321048819a2328721507ee23
+  Download timed out. Retry 8: http://www.freesound.org/api/sounds/333991?api_key=47efd585321048819a2328721507ee23
+  Download timed out. Retry 9: http://www.freesound.org/api/sounds/333991?api_key=47efd585321048819a2328721507ee23
+  Download timed out. Retry 10: http://www.freesound.org/api/sounds/333991?api_key=47efd585321048819a2328721507ee23
+  Download timed out. Retry 11: http://www.freesound.org/api/sounds/333991?api_key=47efd585321048819a2328721507ee23
+  Download timed out. Retry 12: http://www.freesound.org/api/sounds/333991?api_key=47efd585321048819a2328721507ee23
+  Download timed out. Retry 13: http://www.freesound.org/api/sounds/333991?api_key=47efd585321048819a2328721507ee23
+  Download timed out. Retry 14: http://www.freesound.org/api/sounds/333991?api_key=47efd585321048819a2328721507ee23
+  Download timed out. Retry 15: http://www.freesound.org/api/sounds/333991?api_key=47efd585321048819a2328721507ee23
+  Download timed out. Retry 16: http://www.freesound.org/api/sounds/333991?api_key=47efd585321048819a2328721507ee23
+--------------------
