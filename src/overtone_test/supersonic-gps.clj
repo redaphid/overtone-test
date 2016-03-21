@@ -5,22 +5,25 @@
 
 (def frequency 400)
 
-(defn beeper [t val]
-  (println (in-millis (now)))
-  (let [next-t (+ t 200)]
-   (apply-at next-t #'foo [next-t (inc val)])
+(defn emitter [time]
+  (println (time/to-long (now)))
+  (let [next-t (get-next-time)]
+   (apply-at next-t #'emitter [next-t (inc val)])
   )
 )
+
+
+(emitter (get-next-time))
 
 (beeper (now) 0)
 
 (stop)
 
 
-(defn get-next-time []
+(defn get-next-time [interval]
   (let [millis (time/to-long (now))]
-    (+ millis (- 200 (mod millis 200)))
+    (+ millis (- interval (mod millis interval)))
   )
 )
 
-(- (get-next-time) (time/to-long (now)))
+(- (get-next-time 100) (time/to-long (now)))
