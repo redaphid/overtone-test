@@ -3,18 +3,24 @@
   (:require [clj-time.coerce :as time])
 )
 
-(def frequency 400)
+(definst beep [frequency 440 duration 1]
+  (let [envelope (line 1 1 duration :action FREE)]
+          (* envelope (sin-osc frequency))))
 
-(defn emitter [time]
-  (println (time/to-long (now)))
-  (let [next-t (get-next-time)]
-   (apply-at next-t #'emitter [next-t (inc val)])
+(beep)
+(stop)
+
+(defn emitter [interval frequency]
+  (println "The time is: " (time/to-long (now)) interval frequency)
+  (let [next-t (get-next-time interval)]
+   (beep frequency (/ interval 2000))
+  ;  (beep (/ interval 2000) (sin-osc frequency))
+   (println "Executing next in " next-t "ms")
+   (apply-at next-t #'emitter [interval frequency])
   )
 )
 
-
-(emitter (get-next-time))
-
+(emitter 1500 550)
 (beeper (now) 0)
 
 (stop)
