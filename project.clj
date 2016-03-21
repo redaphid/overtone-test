@@ -4,6 +4,7 @@
   :dependencies [
     [org.clojure/clojure "1.8.0"]
     [quantisan/overtone "0.10-SNAPSHOT"]
+    [clj-time "0.11.0"]
   ]
   :main ^:skip-aot overtone-test.core
   :target-path "target/%s"

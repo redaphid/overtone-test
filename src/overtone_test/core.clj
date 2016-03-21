@@ -2,13 +2,23 @@
   (:use [overtone.live])
 )
 
+(definst tone [frequency 440] (sin-osc frequency))
+(tone 300)
+(kill tone)
 
+(comment
 (definst tone [frequency 440] (sin-osc frequency))
 
 (tone 300)
 (tone 300.5)
 (kill tone)
+(periodic 1000 #(println "foo"))
+(periodic 1000 #(beep))
+(definst beep [frequency 440 duration 1]
+  (let [envelope (line 1 0 duration :action FREE)]
+          (* envelope (sin-osc frequency))))
 
+(periodic 500 tone)
 (definst doubletone [freq1 440 freq2 440]
   (+
     (sin-osc freq1)
@@ -66,3 +76,4 @@
 (baz 220)
 (baz 440)
 (kill baz)
+)
