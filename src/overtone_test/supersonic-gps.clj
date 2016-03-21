@@ -7,21 +7,13 @@
   (let [envelope (line 1 1 duration :action FREE)]
           (* envelope (sin-osc frequency))))
 
-(beep)
-(stop)
-
 (defn emitter [interval frequency]
-  (println "The time is: " (time/to-long (now)) interval frequency)
-  (let [next-t (get-next-time interval)]
-   (beep frequency (/ interval 2000))
-  ;  (beep (/ interval 2000) (sin-osc frequency))
-   (println "Executing next in " next-t "ms")
-   (apply-at next-t #'emitter [interval frequency])
+  (let [initial-delay (+ interval (offset-from-interval interval))]
+    (periodic interval #(beep frequency (/ interval 2)) initial-delay)
   )
 )
 
-(emitter 1500 550)
-(beeper (now) 0)
+(emitter 20 17000)
 
 (stop)
 
@@ -32,4 +24,6 @@
   )
 )
 
-(- (get-next-time 100) (time/to-long (now)))
+(defn offset-from-interval [interval]
+    (mod (time/to-long (now)) interval)
+)
