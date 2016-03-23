@@ -2,21 +2,31 @@
   (:use [overtone.live])
   (:require [clj-time.coerce :as time])
 )
+(def baseFrequency 400)
+(def addHz 100)
+(def interval 1000)
 
-(definst beep [frequency 440 duration 1]
-  (let [envelope (line 1 1 duration :action FREE)]
-          (* envelope (sin-osc frequency))))
+(definst beep [frequency baseFrequency volume 0.1]
+  (* volume (sin-osc frequency)))
 
-(defn emitter [interval frequency]
-  (let [initial-delay (+ interval (offset-from-interval interval))]
-    (periodic interval #(beep frequency (/ interval 2)) initial-delay)
+(defn changeBeep []
+  (let [
+    millis (time/to-long (now))
+    tick (mod (long (/ millis interval)) 2)]
+    (println millis tick)
+    (ctl beep :frequency
+      (+ baseFrequency (* addHz tick)))
   )
 )
 
-(emitter 20 18000)
-
+(defn emitter [interval]
+  (let [initial-delay (+ interval (offset-from-interval interval))]
+    (periodic interval changeBeep initial-delay)
+  )
+)
+(beep)
+(emitter 1000)
 (stop)
-
 
 (defn get-next-time [interval]
   (let [millis (time/to-long (now))]
