@@ -1,21 +1,65 @@
 (ns overtone.examples.buses.getonthebus
   (:use overtone.live)
-  (:require [overtone.studio.util :as util])
-  (:require [overtone.studio.scope :as scope])
+  (:require [overtone.at-at :as at-at])
   )
 
+;; Buses are like wires or pipes that you can use to connect the output
+;; of one synth to the inputs of one or more other synths.
+;; There are two types of buses - control buses and audio buses.
+
+;; Control buses are designed to carry control signals - values changing
+;; at a human rate (i.e. the speed you may turn a dial or slide a slider).
+
+;; Audio buses are designed to carry audio signals - values changing at
+;; a rate that makes them audible.
+
+;; Audio buses can carry both audio and control rate signals. However,
+;; they will use more computational resources. Therefore, consider using
+;; a control bus if you're signal doesn't need to change more than, say,
+;; 60 times a second.
+
+;; You can create many new control and audio buses. However, your system
+;; will start with one audio bus per audio input and one audio bus per audio
+;; output. For example, your left speaker is represented by audio bus 0
+;; and your right speaker is represented by audio bus 1
+
+;; Let's create some buses to carry some control rate signals
+
+;; We use the defonce construct to avoid new buses being created and
+;; assigned accidentally, if the forms get re-evaluated.
 (stop)
+(defonce tri-bus (audio-bus))
+(defonce sin-bus (audio-bus))
 
-(defonce mic-bus (audio-bus))
+;; These are synths created to send data down the buses.
+;; They are set up so that you can modify both the bus they output on and
+;; their frequency whilst they're running via standard ctl messages.
+;;
+;; Note that we use the :kr variant of the out ugen. This tells the synth
+;; to output to a control bus rather than an audio bus which is the default.
+(defsynth mic [out-bus 0 freq 5]
+  (out out-bus (sound-in 0)))
 
-(defsynth mic []
-  (out mic-bus (sound-in 0)))
+(defsynth tri-synth [out-bus 0 freq 5]
+  (out:kr out-bus (lf-tri:kr freq)))
 
-(defonce mic-group (group "mic-group main"))
-(def mic-buffer (buffer 2048))
-(util/bus->buf mic-bus mic-buffer)
-(scope/scope mic-buffer)
-(mic)
+(defsynth sin-synth [out-bus 0 freq 5]
+  (out:kr out-bus (sin-osc:kr freq)))
+
+;; Probably the most important lesson about using buses is to understand that
+;; the execution of the synthesis on the server is strictly ordered. Running
+;; synths are placed in a node tree which is evaluated in a depth-first order.
+;; This is important to know because if you want synth instance A to be able to
+;; communicate with synth instance B via a bus, A needs to be *before* B in the
+;; synthesis node tree.
+
+;; The way to gain control over the order of execution within the synthesis tree
+;; is to use groups. Let's create some now:
+
+(defonce main-g (group "get-on-the-bus main"))
+(defonce early-g (group "early birds" :head main-g))
+(defonce later-g (group "latecomers" :after early-g))
+
 ;; Let's create some source synths that will send signals on our buses. Let's
 ;; also put them in the early group to ensure that their signals get sent first.
 
